@@ -14,6 +14,18 @@ module.exports = {
         })
         return deferred.promise;
     },
+
+    deleteUser: function(mail, mdp) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("DELETE FROM User WHERE usMail = '"+mail+"' and usMotDePasse = '"+mdp+"'")
+                .then(function(data) {
+                    deferred.resolve(data);
+                });
+        })
+        return deferred.promise;
+    },
+
     getUserById: function(id) {
         var deferred = Q.defer();
         connect.then(function(conn) {
@@ -24,6 +36,7 @@ module.exports = {
         })
         return deferred.promise;
     },
+
     checkUserPassword: function(mail, mdp) {
         var deferred = Q.defer();
         connect.then(function(conn) {
