@@ -15,4 +15,10 @@ router.get('/addUser/:nom/:prenom/:mail/:mdp', function(req, res, next) {
     });
 });
 
+router.get('/checkUserPassword/:mail/:mdp', function(req, res, next) {
+    user.checkUserPassword(req.params.mail,req.params.mdp).then(function(user, err) {
+        res.json(user);
+    });
+});
+
 module.exports = router;
