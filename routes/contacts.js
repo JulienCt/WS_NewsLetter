@@ -15,4 +15,10 @@ router.get('/deleteContact/:mail/:ownerUserId', function(req, res, next) {
     });
 });
 
+router.post('/addListContact', function(req, res, next) {
+  user.addListContact(req.body.idUser,req.body.Contact).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 module.exports = router;

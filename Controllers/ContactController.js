@@ -25,5 +25,25 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    addListContact: function(idUser, listContact) {
+        var deferred = Q.defer();
+        var queryListContact = "";
+        console.log(listContact);
+        for(var i = 0; i<listContact.length;i++)
+        {
+          queryListContact += "('"+listContact[i].coNom+"','" + listContact[i].coPrenom +"','" + listContact[i].coMail +"','"+ idUser+"'),";
+        }
+        console.log(queryListContact);
+        queryListContact = queryListContact.slice(0, -1);
+        var queryContact = "INSERT INTO Contact (coNom, coPrenom, coMail, coIdUser) VALUES " + queryListContact;
+        connect.then(function(conn) {
+            conn.query(queryContact)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
     }
 }
