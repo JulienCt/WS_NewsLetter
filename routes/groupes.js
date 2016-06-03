@@ -15,4 +15,16 @@ router.get('/deleteGroupe/:idGroupe', function(req, res, next) {
     });
 });
 
+router.get('/addContactToGroupe/:idGroupe/:listContactId', function(req, res, next) {
+    user.addContactToGroupe(req.params.idGroupe, req.params.listContactId).then(function(data, err) {
+        res.send("OK");
+    });
+});
+
+router.get('/getGroupesForUser/:idUser', function(req, res, next) {
+    user.getGroupesForUser(req.params.idUser).then(function(listGroupe, err) {
+        res.send(listGroupe);
+    });
+});
+
 module.exports = router;

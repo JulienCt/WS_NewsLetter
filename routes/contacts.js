@@ -21,4 +21,10 @@ router.post('/addListContact', function(req, res, next) {
   });
 });
 
+router.get('/getListContactForUser/:userId', function(req, res, next) {
+    contact.getListContactForUser(req.params.userId).then(function(listContact, err) {
+        res.send(listContact);
+    });
+});
+
 module.exports = router;

@@ -45,5 +45,17 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getListContactForUser: function(idUser) {
+        var deferred = Q.defer();
+        var queryContact = "SELECT * FROM Contact where coIdUser = " + idUser;
+        connect.then(function(conn) {
+            conn.query(queryContact)
+                .then(function(listContact) {
+                    deferred.resolve(listContact);
+              });
+        })
+        return deferred.promise;
     }
 }
