@@ -40,12 +40,12 @@ module.exports = {
     checkUserPassword: function(mail, mdp) {
         var deferred = Q.defer();
         connect.then(function(conn) {
-            conn.query("select usMotDePasse from User where usMail = '" +mail+ "'")
-                .then(function(mdpUser) {
-                  if (mdpUser[0].usMotDePasse == mdp) {
-                      deferred.resolve(true);
+            conn.query("select usId from User where usMail = '" +mail+ "' and '"+mdp+"'")
+                .then(function(userId) {
+                  if (userId.length > 0) {
+                      deferred.resolve(userId);
                   }else {
-                      deferred.resolve(false);
+                      deferred.resolve("User not found");
                   }
                 });
         })
