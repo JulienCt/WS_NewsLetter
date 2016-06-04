@@ -15,4 +15,10 @@ router.get('/addGroupeToNewsLetter/:idGroupe/:idNewsLetter', function(req, res, 
   });
 });
 
+router.get('/addListContactToNewsLetter/:listContact/:idNewsLetter', function(req, res, next) {
+  newsLetter.addListContactToNewsLetter(req.params.listContact, req.params.idNewsLetter).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 module.exports = router;

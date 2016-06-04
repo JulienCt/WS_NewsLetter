@@ -35,7 +35,6 @@ module.exports = {
           queryListContact += "('"+idGroupe+"','" + arrayUserId[i]+"'),";
         }
         queryListContact = queryListContact.slice(0, -1);
-        console.log(queryListContact);
         connect.then(function(conn) {
             conn.query("INSERT INTO GroupeContact VALUES "+queryListContact)
                 .then(function() {
