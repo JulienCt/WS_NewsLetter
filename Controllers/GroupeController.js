@@ -45,12 +45,23 @@ module.exports = {
         return deferred.promise;
     },
 
-    getGroupesForUser: function(idGroupe) {
+    getListGroupesForUser: function(idUser) {
         var deferred = Q.defer();
         connect.then(function(conn) {
-            conn.query("SELECT * FROM Groupe WHERE grId = "+idGroupe)
+            conn.query("SELECT * FROM Groupe WHERE grIdUser = "+idUser)
                 .then(function(listGroupe) {
                     deferred.resolve(listGroupe);
+                });
+        })
+        return deferred.promise;
+    },
+
+    getListContactForGroupe: function(idGroupe) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT coId, coNom, coPrenom, coMail, coIdUser FROM GroupeContact, Contact WHERE gcGroupeId = "+idGroupe + " and gcContactId = coId")
+                .then(function(listContact) {
+                    deferred.resolve(listContact);
                 });
         })
         return deferred.promise;
