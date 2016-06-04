@@ -61,5 +61,16 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    removeListContactToNewsLetter: function(listContactId, idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("DELETE FROM ListeDiffusion where liNewsLetterId = " + idNewsLetter + " AND liContactId in ("+listContactId+")")
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
     }
 }

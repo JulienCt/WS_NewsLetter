@@ -21,4 +21,10 @@ router.get('/addListContactToNewsLetter/:listContact/:idNewsLetter', function(re
   });
 });
 
+router.get('/removeListContactToNewsLetter/:listContact/:idNewsLetter', function(req, res, next) {
+  newsLetter.removeListContactToNewsLetter(req.params.listContact, req.params.idNewsLetter).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 module.exports = router;
