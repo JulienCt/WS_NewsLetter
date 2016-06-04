@@ -26,11 +26,27 @@ app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'publi                                                                    0')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.all('*', function(req, res, next) {
+    // add details of what is allowed in HTTP request headers to the response headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    // the next() function continues execution and will move onto the requested URL/URI
+    next();
+});
+app.options('*', function(req, res) {
+    res.send(200);
+});
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/contacts', contacts);
 app.use('/groupes', groupes);
 app.use('/newsLetter', newsLetter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

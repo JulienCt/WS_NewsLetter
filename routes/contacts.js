@@ -16,7 +16,9 @@ router.get('/deleteContact/:mail/:ownerUserId', function(req, res, next) {
 });
 
 router.post('/addListContact', function(req, res, next) {
-  contact.addListContact(req.body.idUser,req.body.Contact).then(function(data, err) {
+
+  var body =  JSON.parse(Object.keys(req.body)[0]);
+  contact.addListContact(body.idUser, body.Contact).then(function(data, err) {
       res.send("OK");
   });
 });
