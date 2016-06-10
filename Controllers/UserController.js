@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('promise-mysql');
 var Q = require('q');
+var crypto = require('crypto');
 var connect = mysql.connectToDB();
 
 module.exports = {
@@ -39,11 +40,12 @@ module.exports = {
 
     checkUserPassword: function(mail, mdp) {
         var deferred = Q.defer();
+        var mdpMD5 = crypto.createHash('md5').update(mdp).digest("hex");
         connect.then(function(conn) {
-            conn.query("select usId from User where usMail = '" +mail+ "' and '"+mdp+"'")
+            conn.query("select usId from User where usMail = '" +mail+ "' and usMotDePasse = '"+mdpMD5+"'")
                 .then(function(userId) {
                   if (userId.length > 0) {
-                      deferred.resolve(userId);
+                      deferred.resolve(userId[0]);
                   }else {
                       deferred.resolve("User not found");
                   }
