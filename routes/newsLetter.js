@@ -39,4 +39,10 @@ router.get('/mailOpen/:idNewsLetter/:idContact', function(req, res, next) {
   });
 });
 
+router.get('/newsDesinscription/:idNewsLetter/:idContact', function(req, res, next) {
+  newsLetter.newsDesinscription(req.params.idNewsLetter, req.params.idContact).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 module.exports = router;

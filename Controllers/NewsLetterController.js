@@ -120,10 +120,21 @@ module.exports = {
         return deferred.promise;
     },
 
-    mailOpen: function(contactId, idNewsLetter) {
+    mailOpen: function(idNewsLetter, contactId) {
         var deferred = Q.defer();
         connect.then(function(conn) {
             conn.query("UPDATE ListeDiffusion SET liOuvert = 1 WHERE liContactId = " + contactId + " AND liNewsLetterId = " + idNewsLetter)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
+    newsDesinscription: function(idNewsLetter, contactId) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("DELETE FROM ListeDiffusion WHERE liContactId = " + contactId + " AND liNewsLetterId = " + idNewsLetter)
                 .then(function() {
                     deferred.resolve();
                 });
