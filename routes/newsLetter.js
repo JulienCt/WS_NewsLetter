@@ -27,4 +27,16 @@ router.get('/removeListContactToNewsLetter/:listContact/:idNewsLetter', function
   });
 });
 
+router.get('/sendNewsLetter/:idNewsLetter', function(req, res, next) {
+  newsLetter.sendNewsLetter(req.params.idNewsLetter).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
+router.get('/mailOpen/:idNewsLetter/:idContact', function(req, res, next) {
+  newsLetter.mailOpen(req.params.idNewsLetter, req.params.idContact).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 module.exports = router;

@@ -2,6 +2,7 @@ var express = require('express');
 var mysql = require('promise-mysql');
 var Q = require('q');
 var connect = mysql.connectToDB();
+var nodemailer = require('nodemailer');
 
 module.exports = {
     createNewsLetter: function(news) {
@@ -37,7 +38,7 @@ module.exports = {
                     }
                     console.log(queryList);
                     queryList = queryList.slice(0, -1);
-                    conn.query("INSERT INTO ListeDiffusion (liContactId, liNewsLetterId, liEnvoye) VALUES " + queryList)
+                    conn.query("INSERT INTO ListeDiffusion (liContactId, liNewsLetterId, liOuvert) VALUES " + queryList)
                         .then(function() {
                             deferred.resolve();
                         });
@@ -67,6 +68,62 @@ module.exports = {
         var deferred = Q.defer();
         connect.then(function(conn) {
             conn.query("DELETE FROM ListeDiffusion where liNewsLetterId = " + idNewsLetter + " AND liContactId in ("+listContactId+")")
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
+    sendNewsLetter: function(idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT * FROM NewsLetter WHERE neId = " + idNewsLetter)
+                .then(function(newsLetter) {
+                  conn.query("SELECT coMail, coId FROM ListeDiffusion, Contact WHERE liNewsLetterId = " + idNewsLetter + " AND liContactId = coId")
+                      .then(function(listEmail) {
+                          for(var i =0; i < listEmail.length; i++)
+                          {
+
+                              console.log(listEmail[i].coId);
+                              // create reusable transporter object using the default SMTP transport
+                              var transporter = nodemailer.createTransport("SMTP", {
+                                                  service: "Gmail",
+                                                  auth: {
+                                                      user: "doodle.noreply.epsi@gmail.com",
+                                                      pass: "qsdfghjklm"
+                                                  }
+                                              });
+                              var srcImg = "http://localhost:4242/newsLetter/mailOpen/"+listEmail[i].coId+"/"+idNewsLetter;
+                              console.log(listEmail[i].coId, listEmail[i].coMail);
+                              // setup e-mail data with unicode symbols
+                              var mailOptions = {
+                                  from: '<doodle.noreply.epsi@gmail.com>', // sender address
+                                  to: '<'+listEmail[i].coMail+'>', // list of receivers
+                                  subject: 'Hello ✔', // Subject line
+                                  text: 'Hello world 🐴', // plaintext body
+                                  html: '<img src="'+srcImg+'" alt="" />' // html body
+                              };
+
+                              // send mail with defined transport object
+                              transporter.sendMail(mailOptions, function(error, info){
+                                  if(error){
+                                      return console.log(error);
+                                  }
+                                  console.log('Message sent: ' + info.response);
+                              });
+                          }
+                          deferred.resolve();
+                      });
+                });
+        })
+        return deferred.promise;
+    },
+
+    mailOpen: function(contactId, idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("UPDATE ListeDiffusion SET liOuvert = 1 WHERE liContactId = " + contactId + " AND liNewsLetterId = " + idNewsLetter)
                 .then(function() {
                     deferred.resolve();
                 });
