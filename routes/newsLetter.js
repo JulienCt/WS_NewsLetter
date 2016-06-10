@@ -45,4 +45,10 @@ router.get('/newsDesinscription/:idNewsLetter/:idContact', function(req, res, ne
   });
 });
 
+router.get('/clickOnLink/:idLink', function(req, res, next) {
+  newsLetter.clickOnLink(req.params.idLink).then(function(data, err) {
+      res.redirect(data);
+  });
+});
+
 module.exports = router;

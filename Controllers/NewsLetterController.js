@@ -94,15 +94,18 @@ module.exports = {
                                                       pass: "qsdfghjklm"
                                                   }
                                               });
-                              var srcImg = "http://localhost:4242/newsLetter/mailOpen/"+listEmail[i].coId+"/"+idNewsLetter;
-                              console.log(listEmail[i].coId, listEmail[i].coMail);
+
+                              var srcImg = "http://localhost:4242/newsLetter/mailOpen/"+idNewsLetter+"/"+listEmail[i].coId;
+                              var lienDesinscription = "http://localhost:4242/newsLetter/newsDesinscription/"+idNewsLetter+"/"+listEmail[i].coId;
+                              var lienNewsLetter = "http://localhost:4242/newsLetter/clickOnLink/"+newsLetter[0].neLinkId;
+                              var contentNewsLetter = newsLetter[0].neTextContent;
+
                               // setup e-mail data with unicode symbols
                               var mailOptions = {
                                   from: '<doodle.noreply.epsi@gmail.com>', // sender address
                                   to: '<'+listEmail[i].coMail+'>', // list of receivers
-                                  subject: 'Hello ✔', // Subject line
-                                  text: 'Hello world 🐴', // plaintext body
-                                  html: '<img src="'+srcImg+'" alt="" />' // html body
+                                  subject: newsLetter[0].neTitre, // Subject line
+                                  html: '<div>'+contentNewsLetter+'</div><img src="'+srcImg+'" alt="" /> </br> <a href="'+lienDesinscription+'">Se désinscrire de la NewsLetter</a> </br> <a href="'+lienNewsLetter+'">Lien de la newsLetter</a>' // html body
                               };
 
                               // send mail with defined transport object
@@ -137,6 +140,21 @@ module.exports = {
             conn.query("DELETE FROM ListeDiffusion WHERE liContactId = " + contactId + " AND liNewsLetterId = " + idNewsLetter)
                 .then(function() {
                     deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
+    clickOnLink: function(idLink) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("UPDATE Link SET linOuvert = linOuvert + 1 WHERE linId = " + idLink)
+                .then(function() {
+                  conn.query("SELECT linUrl FROM Link WHERE linId = " + idLink)
+                      .then(function(url) {
+                        console.log(url[0].linUrl);
+                          deferred.resolve(url[0].linUrl);
+                      });
                 });
         })
         return deferred.promise;
