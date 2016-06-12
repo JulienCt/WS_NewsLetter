@@ -31,7 +31,7 @@ module.exports = {
         var deferred = Q.defer();
         console.log(news);
         connect.then(function(conn) {
-            conn.query("UPDATE NewsLetter SET neTitre = '" + news.neTitre + "', neTextContent = '" + news.neTextContent + "' WHERE neId = " news.neId)
+            conn.query("UPDATE NewsLetter SET neTitre = '" + news.neTitre + "', neTextContent = '" + news.neTextContent + "' WHERE neId = " + news.neId)
                 .then(function() {
                     deferred.resolve();
                 });

@@ -63,5 +63,16 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getNombreNewsByUserId: function(idUser) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT COUNT(*) AS nbNews FROM NewsLetter WHERE neUserId = "+ idUser)
+                .then(function(count) {
+                  deferred.resolve(count[0].nbNews);
+                });
+        })
+        return deferred.promise;
     }
 }
