@@ -15,6 +15,12 @@ router.get('/addUser/:nom/:prenom/:mail/:mdp', function(req, res, next) {
     });
 });
 
+router.get('/updateUser/:idUser/:nom/:prenom/:mail/:mdp', function(req, res, next) {
+    user.updateUser(req.params.idUser, req.params.nom,req.params.prenom,req.params.mail,req.params.mdp).then(function(user, err) {
+        res.send("OK");
+    });
+});
+
 router.get('/deleteUser/:mail/:mdp', function(req, res, next) {
     user.deleteUser(req.params.mail,req.params.mdp).then(function(user, err) {
         res.json(user);

@@ -16,6 +16,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    updateUser: function(idUser, nom, prenom, mail, mdp) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("UPDATE User SET usNom = '" + nom + "', usPrenom = '" + prenom + "',usMail ='"+ mail +"', usMotDePasse = '"+ mdp +"' WHERE usId = " + idUser)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
     deleteUser: function(mail, mdp) {
         var deferred = Q.defer();
         connect.then(function(conn) {
