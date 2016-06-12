@@ -27,6 +27,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    deleteNewsLetter: function(idNewsLetter){
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("DELETE FROM NewsLetter where neId = " + idNewsLetter)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
     addGroupeToNewsLetter: function(idGroupe, idNewsLetter) {
         var deferred = Q.defer();
         connect.then(function(conn) {

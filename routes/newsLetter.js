@@ -10,6 +10,12 @@ router.post('/createNewsLetter', function(req, res, next) {
   });
 });
 
+router.get('/deleteNewsLetter/:idNewsLetter', function(req, res, next) {
+  newsLetter.deleteNewsLetter(req.params.idNewsLetter).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 router.get('/addGroupeToNewsLetter/:idGroupe/:idNewsLetter', function(req, res, next) {
   newsLetter.addGroupeToNewsLetter(req.params.idGroupe, req.params.idNewsLetter).then(function(data, err) {
       res.send("OK");
