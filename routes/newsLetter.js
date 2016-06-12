@@ -40,4 +40,23 @@ router.get('/mailOpen/:idNewsLetter/:idContact', function(req, res, next) {
   });
 });
 
+router.get('/newsDesinscription/:idNewsLetter/:idContact', function(req, res, next) {
+  newsLetter.newsDesinscription(req.params.idNewsLetter, req.params.idContact).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
+router.get('/clickOnLink/:idLink', function(req, res, next) {
+  newsLetter.clickOnLink(req.params.idLink).then(function(data, err) {
+      res.redirect(data);
+  });
+});
+
+router.get('/getNombreMailOuvert/:idNewsLetter', function(req, res, next) {
+  newsLetter.getNombreMailOuvert(req.params.idNewsLetter).then(function(nbMailOuvert, err) {
+    console.log(nbMailOuvert);
+      res.send(String(nbMailOuvert));
+  });
+});
+
 module.exports = router;
