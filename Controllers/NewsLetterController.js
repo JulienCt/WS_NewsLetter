@@ -158,5 +158,16 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getNombreMailOuvert: function(idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT COUNT(*) AS nbMailOuvert FROM ListeDiffusion WHERE liOuvert = 1 AND liNewsLetterId = " + idNewsLetter)
+                .then(function(nbMailOuvert) {
+                  deferred.resolve(nbMailOuvert[0].nbMailOuvert);
+                });
+        })
+        return deferred.promise;
     }
 }
