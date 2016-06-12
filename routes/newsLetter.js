@@ -4,7 +4,8 @@ var newsLetter = require("../Controllers/NewsLetterController.js");
 
 /*Route Rest*/
 router.post('/createNewsLetter', function(req, res, next) {
-  newsLetter.createNewsLetter(req.body).then(function(data, err) {
+  var body =  JSON.parse(Object.keys(req.body)[0]);
+  newsLetter.createNewsLetter(body).then(function(data, err) {
       res.send("OK");
   });
 });
