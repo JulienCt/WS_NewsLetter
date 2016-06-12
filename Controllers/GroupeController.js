@@ -44,6 +44,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    deleteContactToGroupe: function(idGroupe, contactId) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("DELETE FROM GroupeContact WHERE gcContactId = "+ contactId +" AND gcGroupeId = " + idGroupe)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
     getListGroupesForUser: function(idUser) {
         var deferred = Q.defer();
         connect.then(function(conn) {

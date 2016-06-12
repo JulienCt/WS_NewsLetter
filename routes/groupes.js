@@ -21,6 +21,12 @@ router.get('/addContactToGroupe/:idGroupe/:listContactId', function(req, res, ne
     });
 });
 
+router.get('/deleteContactToGroupe/:idGroupe/:contactId', function(req, res, next) {
+    groupe.deleteContactToGroupe(req.params.idGroupe, req.params.contactId).then(function(data, err) {
+        res.send("OK");
+    });
+});
+
 router.get('/getListGroupesForUser/:idUser', function(req, res, next) {
     groupe.getListGroupesForUser(req.params.idUser).then(function(listGroupe, err) {
         res.send(listGroupe);
