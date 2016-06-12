@@ -27,4 +27,10 @@ router.get('/checkUserPassword/:mail/:mdp', function(req, res, next) {
     });
 });
 
+router.get('/getListNewsLetterByUserId/:userId', function(req, res, next) {
+    user.getListNewsLetterByUserId(req.params.userId).then(function(listNewsLetter, err) {
+        res.json(listNewsLetter);
+    });
+});
+
 module.exports = router;

@@ -52,5 +52,16 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getListNewsLetterByUserId: function(idUser) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT * FROM NewsLetter WHERE neUserId = "+ idUser)
+                .then(function(listNewsLetter) {
+                  deferred.resolve(listNewsLetter);
+                });
+        })
+        return deferred.promise;
     }
 }
