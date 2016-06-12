@@ -10,19 +10,31 @@ module.exports = {
         console.log(news);
         connect.then(function(conn) {
             if (news.UrlLink != "") {
-                conn.query("INSERT INTO Link (linMd5, linUrl, linOuvert) VALUES ('MD5', '" + news.UrlLink + "', '0')")
+                conn.query("INSERT INTO Link (linUrl, linOuvert) VALUES ('" + news.UrlLink + "', '0')")
                     .then(function() {
-                        conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neUrlImage, neLinkId, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "', '" + news.neUrlImage + "', '" + news.neLinkId + "', '" + news.neUserId + "')")
+                        conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neLinkId, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "', '" + news.neLinkId + "', '" + news.neUserId + "')")
                             .then(function() {
                                 deferred.resolve();
                             });
                     });
             } else {
-                conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neUrlImage, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "', '" + news.neUrlImage + "','" + news.neUserId + "')")
+                conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "','" + news.neUserId + "')")
                     .then(function() {
                         deferred.resolve();
                     });
             }
+        })
+        return deferred.promise;
+    },
+
+    updateNewsLetter: function(news) {
+        var deferred = Q.defer();
+        console.log(news);
+        connect.then(function(conn) {
+            conn.query("UPDATE NewsLetter SET neTitre = '" + news.neTitre + "', neTextContent = '" + news.neTextContent + "' WHERE neId = " news.neId)
+                .then(function() {
+                    deferred.resolve();
+                });
         })
         return deferred.promise;
     },

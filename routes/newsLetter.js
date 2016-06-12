@@ -10,6 +10,13 @@ router.post('/createNewsLetter', function(req, res, next) {
   });
 });
 
+router.post('/updateNewsLetter', function(req, res, next) {
+  var body =  JSON.parse(Object.keys(req.body)[0]);
+  newsLetter.updateNewsLetter(body).then(function(data, err) {
+      res.send("OK");
+  });
+});
+
 router.get('/deleteNewsLetter/:idNewsLetter', function(req, res, next) {
   newsLetter.deleteNewsLetter(req.params.idNewsLetter).then(function(data, err) {
       res.send("OK");
