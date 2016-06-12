@@ -107,7 +107,7 @@ module.exports = {
                       .then(function(listEmail) {
                           for(var i =0; i < listEmail.length; i++)
                           {
-
+                              conn.query("UPDATE ListeDiffusion SET liEnvoye = 1 WHERE liContactId = "+ listEmail[i].coId +" AND liNewsLetterId = " + idNewsLetter)
                               console.log(listEmail[i].coId);
                               // create reusable transporter object using the default SMTP transport
                               var transporter = nodemailer.createTransport("SMTP", {

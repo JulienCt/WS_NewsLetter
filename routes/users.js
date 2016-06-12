@@ -39,4 +39,10 @@ router.get('/getNombreNewsByUserId/:userId', function(req, res, next) {
     });
 });
 
+router.get('/getNombreMailEnvoyeByUserId/:userId', function(req, res, next) {
+    user.getNombreMailEnvoyeByUserId(req.params.userId).then(function(nbNews, err) {
+        res.send(String(nbNews));
+    });
+});
+
 module.exports = router;
