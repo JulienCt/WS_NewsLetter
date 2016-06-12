@@ -85,6 +85,17 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getNombreMailOuvertByUserId: function(idUser) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT COUNT(*) AS nbMail FROM ListeDiffusion, NewsLetter WHERE liOuvert = 1 AND neId = liNewsLetterId AND neUserId = "+ idUser)
+                .then(function(count) {
+                  deferred.resolve(count[0].nbMail);
+                });
+        })
+        return deferred.promise;
     }
 
 }
