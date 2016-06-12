@@ -58,4 +58,11 @@ router.get('/getNombreMailOuvert/:idNewsLetter', function(req, res, next) {
   });
 });
 
+router.get('/getStatLienClique/:idNewsLetter', function(req, res, next) {
+  newsLetter.getStatLienClique(req.params.idNewsLetter).then(function(nbMailOuvert, err) {
+    console.log(nbMailOuvert);
+      res.send(String(nbMailOuvert));
+  });
+});
+
 module.exports = router;

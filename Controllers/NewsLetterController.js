@@ -169,5 +169,16 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getStatLienClique: function(idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT linOuvert FROM Link, NewsLetter WHERE neLinkId = linId AND neId = " + idNewsLetter)
+                .then(function(nbLinkOpen) {
+                  deferred.resolve(nbLinkOpen[0].linOuvert);
+                });
+        })
+        return deferred.promise;
     }
 }
