@@ -41,6 +41,13 @@ router.get('/removeListContactToNewsLetter/:listContact/:idNewsLetter', function
   });
 });
 
+router.get('/getListDiffusionByNewsId/:idNewsLetter', function(req, res, next) {
+  newsLetter.getListDiffusionByNewsId(req.params.idNewsLetter).then(function(listDiffusion, err) {
+      res.json(listDiffusion);
+  });
+});
+
+
 router.get('/sendNewsLetter/:idNewsLetter', function(req, res, next) {
   newsLetter.sendNewsLetter(req.params.idNewsLetter).then(function(data, err) {
       res.send("OK");

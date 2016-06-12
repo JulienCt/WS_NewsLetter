@@ -98,6 +98,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    getListDiffusionByNewsId: function(idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT * FROM ListeDiffusion, Contact where liContactId = coId AND liNewsLetterId = " + idNewsLetter)
+                .then(function(listDiffusion) {
+                    deferred.resolve(listDiffusion);
+                });
+        })
+        return deferred.promise;
+    },
+
     sendNewsLetter: function(idNewsLetter) {
         var deferred = Q.defer();
         connect.then(function(conn) {
