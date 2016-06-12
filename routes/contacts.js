@@ -9,6 +9,12 @@ router.get('/addContact/:nom/:prenom/:mail/:ownerUserId', function(req, res, nex
     });
 });
 
+router.get('/updateContact/:idContact/:nom/:prenom/:mail', function(req, res, next) {
+    contact.updateContact(req.params.idContact, req.params.nom,req.params.prenom,req.params.mail).then(function(data, err) {
+        res.send("OK");
+    });
+});
+
 router.get('/deleteContact/:mail/:ownerUserId', function(req, res, next) {
     contact.deleteContact(req.params.mail,req.params.ownerUserId).then(function(data, err) {
         res.send("OK");
@@ -16,7 +22,6 @@ router.get('/deleteContact/:mail/:ownerUserId', function(req, res, next) {
 });
 
 router.post('/addListContact', function(req, res, next) {
-
   var body =  JSON.parse(Object.keys(req.body)[0]);
   contact.addListContact(body.idUser, body.Contact).then(function(data, err) {
       res.send("OK");

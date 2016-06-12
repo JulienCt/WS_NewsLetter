@@ -16,6 +16,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    updateContact: function(idContact, nom, prenom, mail) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("UPDATE Contact SET coNom = '"+ nom +"', coPrenom = '"+ prenom +"', coMail = '"+ mail +"' WHERE coId = " + idContact)
+                .then(function() {
+                    deferred.resolve();
+                });
+        })
+        return deferred.promise;
+    },
+
     deleteContact: function(mail, ownerUserId) {
         var deferred = Q.defer();
         connect.then(function(conn) {
