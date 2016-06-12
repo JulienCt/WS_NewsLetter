@@ -65,9 +65,14 @@ router.get('/clickOnLink/:idLink', function(req, res, next) {
   });
 });
 
+router.get('/getNombreMailEnvoye/:idNewsLetter', function(req, res, next) {
+  newsLetter.getNombreMailEnvoye(req.params.idNewsLetter).then(function(nbMailEnvoye, err) {
+      res.send(String(nbMailEnvoye));
+  });
+});
+
 router.get('/getNombreMailOuvert/:idNewsLetter', function(req, res, next) {
   newsLetter.getNombreMailOuvert(req.params.idNewsLetter).then(function(nbMailOuvert, err) {
-    console.log(nbMailOuvert);
       res.send(String(nbMailOuvert));
   });
 });

@@ -183,6 +183,17 @@ module.exports = {
         return deferred.promise;
     },
 
+    getNombreMailEnvoye: function(idNewsLetter) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT COUNT(*) AS nbMailEnvoye FROM ListeDiffusion WHERE liEnvoye = 1 AND liNewsLetterId = " + idNewsLetter)
+                .then(function(count) {
+                  deferred.resolve(count[0].nbMailEnvoye);
+                });
+        })
+        return deferred.promise;
+    },
+
     getNombreMailOuvert: function(idNewsLetter) {
         var deferred = Q.defer();
         connect.then(function(conn) {
