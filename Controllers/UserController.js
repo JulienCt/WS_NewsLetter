@@ -96,6 +96,17 @@ module.exports = {
                 });
         })
         return deferred.promise;
+    },
+
+    getNombreLienCliqueByUserId: function(idUser) {
+        var deferred = Q.defer();
+        connect.then(function(conn) {
+            conn.query("SELECT SUM(linOuvert) AS nbLinkOpen FROM Link, NewsLetter WHERE linId = neId AND neUserId = "+ idUser)
+                .then(function(count) {
+                  deferred.resolve(count[0].nbLinkOpen);
+                });
+        })
+        return deferred.promise;
     }
 
 }

@@ -51,5 +51,11 @@ router.get('/getNombreMailOuvertByUserId/:userId', function(req, res, next) {
     });
 });
 
+router.get('/getNombreLienCliqueByUserId/:userId', function(req, res, next) {
+    user.getNombreLienCliqueByUserId(req.params.userId).then(function(nbLien, err) {
+        res.send(String(nbLien));
+    });
+});
+
 
 module.exports = router;
