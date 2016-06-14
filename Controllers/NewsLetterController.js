@@ -7,7 +7,7 @@ var nodemailer = require('nodemailer');
 module.exports = {
     createNewsLetter: function(news) {
         var deferred = Q.defer();
-        console.log(news);
+        news = JSON.parse(Object.keys(news));
         connect.then(function(conn) {
             if (news.UrlLink != "") {
                 conn.query("INSERT INTO Link (linUrl, linOuvert) VALUES ('" + news.UrlLink + "', '0')")
