@@ -218,10 +218,13 @@ module.exports = {
 
     getStatLienClique: function(idNewsLetter) {
         var deferred = Q.defer();
+        nbLienOuvert = 0;
         connect.then(function(conn) {
             conn.query("SELECT linOuvert FROM Link, NewsLetter WHERE neLinkId = linId AND neId = " + idNewsLetter)
                 .then(function(nbLinkOpen) {
-                  deferred.resolve(nbLinkOpen[0].linOuvert);
+                  if(nbLinkOpen[0] != undefined)
+                     nbLienOuvert = nbLinkOpen[0].linOuvert;
+                  deferred.resolve(nbLienOuvert);
                 });
         })
         return deferred.promise;
