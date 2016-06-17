@@ -13,8 +13,7 @@ router.post('/createNewsLetter', function(req, res, next) {
 
 //Update d'une NewsLetter
 router.post('/updateNewsLetter', function(req, res, next) {
-  var body =  JSON.parse(Object.keys(req.body)[0]);
-  newsLetter.updateNewsLetter(body).then(function(data, err) {
+  newsLetter.updateNewsLetter(req.body).then(function(data, err) {
       res.send("OK");
   });
 });

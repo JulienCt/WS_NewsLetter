@@ -28,13 +28,13 @@ module.exports = {
     },
 
     updateNewsLetter: function(news) {
-        var deferred = Q.defer();
-        console.log(news);
-        connect.then(function(conn) {
-            conn.query("UPDATE NewsLetter SET neTitre = '" + news.neTitre + "', neTextContent = '" + news.neTextContent + "' WHERE neId = " + news.neId)
-                .then(function() {
-                    deferred.resolve();
-                });
+      var deferred = Q.defer();
+      news = JSON.parse(Object.keys(news));
+      connect.then(function(conn) {
+          conn.query("UPDATE NewsLetter SET neTitre = '" + news.neTitre + "', neTextContent = '" + news.neTextContent + "' WHERE neId = " + news.neId)
+              .then(function() {
+                  deferred.resolve();
+              });
         })
         return deferred.promise;
     },
