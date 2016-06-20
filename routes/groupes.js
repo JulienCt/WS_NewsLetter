@@ -6,8 +6,8 @@ var groupe = require("../Controllers/GroupeController.js");
 
 //Crée un groupe
 router.get('/createGroupe/:nom/:description/:idUser', function(req, res, next) {
-    groupe.createGroupe(req.params.nom, req.params.description, req.params.idUser).then(function(data, err) {
-        res.send("OK");
+    groupe.createGroupe(req.params.nom, req.params.description, req.params.idUser).then(function(id, err) {
+        res.send(String(id));
     });
 });
 

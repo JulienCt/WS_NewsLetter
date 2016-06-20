@@ -8,8 +8,8 @@ module.exports = {
         var deferred = Q.defer();
         connect.then(function(conn) {
             conn.query("INSERT INTO Groupe (grNom,grDescription,grIdUser) VALUES ('" + nom + "','" + description + "','" + idUser + "')")
-                .then(function() {
-                    deferred.resolve();
+                .then(function(result) {
+                    deferred.resolve(result.insertId);
                 });
         })
         return deferred.promise;
