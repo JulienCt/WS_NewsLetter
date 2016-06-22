@@ -7,8 +7,9 @@ var connect = mysql.connectToDB();
 module.exports = {
     addUser: function(nom, prenom, mail, mdp) {
         var deferred = Q.defer();
+        var mdpMD5 = crypto.createHash('md5').update(mdp).digest("hex");
         connect.then(function(conn) {
-            conn.query("INSERT INTO User (usNom,usPrenom,usMail,usMotDePasse) VALUES ('" + nom + "','" + prenom + "','" + mail + "','" + mdp + "')")
+            conn.query("INSERT INTO User (usNom,usPrenom,usMail,usMotDePasse) VALUES ('" + nom + "','" + prenom + "','" + mail + "','" + mdpMD5 + "')")
                 .then(function(user) {
                     deferred.resolve(user);
                 });
