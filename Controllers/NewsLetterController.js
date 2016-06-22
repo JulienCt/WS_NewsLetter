@@ -11,8 +11,8 @@ module.exports = {
         connect.then(function(conn) {
             if (news.UrlLink != "") {
                 conn.query("INSERT INTO Link (linUrl, linOuvert) VALUES ('" + news.UrlLink + "', '0')")
-                    .then(function() {
-                        conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neLinkId, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "', '" + news.neLinkId + "', '" + news.neUserId + "')")
+                    .then(function(link) {
+                        conn.query("INSERT INTO NewsLetter (neTitre, neTextContent, neLinkId, neUserId) VALUES ('" + news.neTitre + "', '" + news.neTextContent + "', '" + link.insertedId + "', '" + news.neUserId + "')")
                             .then(function() {
                                 deferred.resolve();
                             });
